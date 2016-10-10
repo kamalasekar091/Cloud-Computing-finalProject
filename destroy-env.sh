@@ -1,69 +1,66 @@
 #!/bin/bash
 
-#reteriving the values of the running instances
+#Grab the instance Id' of the running instance
 instance_id_running=`aws ec2 describe-instances --filters "Name=instance-state-code,Values=16" --query 'Reservations[*].Instances[].InstanceId'`
 
-
-#printing the value of the running isntances
 echo "Running instance ID's"
 
 echo $instance_id_running
 
+#Grab the instance id of teh instance with the client token
 
-#reteriving the value of the instances launched using the client token, here we are passing the value as argumnet
 instance_id=`aws ec2 describe-instances --filters "Name=client-token,Values=$1" --query 'Reservations[*].Instances[].InstanceId'`
 
 echo "Instances Id with client token"
 
 echo $instance_id
 
+#grab the load balancer name
 
-#detach the load balancer from the autoscaling group
-aws autoscaling detach-load-balancers --load-balancer-names itmo-544-kro --auto-scaling-group-name webserver_demo
+load_balancer_name=`aws elb describe-load-balancers --query 'LoadBalancerDescriptions[*].LoadBalancerName'`
 
+echo $load_balancer_name
 
-#detach the  instances from the auto scaling group 
-aws autoscaling detach-instances --instance-ids $instance_id --auto-scaling-group-name webserver_demo --should-decrement-desired-capacity
+#grab the launch configuration name
 
+launch_config_name=`aws autoscaling describe-launch-configurations --query 'LaunchConfigurations[].LaunchConfigurationName'`
 
-#set the desired capacity  of the autoscaling group to zero thus terminiating the  instances alunched by the autoscaling group
-aws autoscaling set-desired-capacity --auto-scaling-group-name webserver_demo --desired-capacity 0 
+echo $launch_config_name
 
+#grab the  auto scaling group name
 
-#instance_id_shut=`aws ec2 describe-instances --filters "Name=instance-state-code,Values=32" --query 'Reservations[*].Instances[].InstanceId'`
-#aws ec2 wait instance-terminated --instance-ids $instance_id_shut
-#aws elb delete-load-balancer-listeners --load-balancer-name itmo-544-kro --load-balancer-ports 80
+auto_scaling_name=`aws autoscaling describe-auto-scaling-groups --query 'AutoScalingGroups[*].AutoScalingGroupName'`
 
+echo $auto_scaling_name
 
-#derigister instances from the load balancer
-aws elb deregister-instances-from-load-balancer --load-balancer-name itmo-544-kro --instances $instance_id
+#Detach load balancer from the autoscaling group
 
+aws autoscaling detach-load-balancers --load-balancer-names $load_balancer_name --auto-scaling-group-name $auto_scaling_name
 
+#detach instances from the autoscaling group so that we can perform the deregister operations
 
-#delete load balancer
-aws elb delete-load-balancer --load-balancer-name itmo-544-kro
+aws autoscaling detach-instances --instance-ids $instance_id --auto-scaling-group-name $auto_scaling_name --should-decrement-desired-capacity
 
+#set  the  autos caling  desired capacity to zero
 
+aws autoscaling set-desired-capacity --auto-scaling-group-name $auto_scaling_name --desired-capacity 0 
 
-#terminate instances from the load balancer
+#deregister instances
+
+aws elb deregister-instances-from-load-balancer --load-balancer-name $load_balancer_name --instances $instance_id
+
+# delete load balancer
+aws elb delete-load-balancer --load-balancer-name $load_balancer_name
+
+#terminate instances
 aws ec2 terminate-instances --instance-ids $instance_id
 
-
-
-# wait for the instances to et terminated 
+#wait for instances to get terminated
 aws ec2 wait instance-terminated --instance-ids $instance_id
 
-
-
-#This wait is performed to check that all the instances in running state previously are now terminated this is done in assumtion that no other extra instances are launch deivating from our requirment
 aws ec2 wait instance-terminated --instance-ids $instance_id_running
 
+#delete autoscaling group and  launch configuration
+aws autoscaling delete-auto-scaling-group --auto-scaling-group-name $auto_scaling_name
 
-
-#delete the auto scaling group
-aws autoscaling delete-auto-scaling-group --auto-scaling-group-name webserver_demo
-
-
-
-#delete  the launch configuration
-aws autoscaling delete-launch-configuration --launch-configuration-name webserver
+aws autoscaling delete-launch-configuration --launch-configuration-name $launch_config_name
