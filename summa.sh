@@ -7,3 +7,9 @@ var3= diff var1 var2
 
 echo var3
 
+if [ $# -eq 5 ]
+then
+echo "you have five parameter"
+else
+echo "you dont have exactly five parameter"
+fi
