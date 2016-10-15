@@ -135,10 +135,10 @@ valfive $5
 echo "validation padded for five parameter"
 
 #Launching 3 new instances, using the passed parameter
-aws ec2 run-instances --image-id $1 --key-name $2 --security-group-ids $3 --client-token kr --instance-type t2.micro --user-data file://installapp.sh --placement AvailabilityZone=us-west-2b --count $5
+aws ec2 run-instances --image-id $1 --key-name $2 --security-group-ids $3 --client-token kr101 --instance-type t2.micro --user-data file://installapp.sh --placement AvailabilityZone=us-west-2b --count $5
 
 #reteriving the instances ID with given clinet token in run instances command
-instance_id=`aws ec2 describe-instances --filters "Name=client-token,Values=kr" --query 'Reservations[*].Instances[].InstanceId'`
+instance_id=`aws ec2 describe-instances --filters "Name=client-token,Values=kr101" --query 'Reservations[*].Instances[].InstanceId'`
 
 #Printing the instances ID's
 echo $instance_id
@@ -147,7 +147,7 @@ echo $instance_id
 aws ec2 wait instance-running --instance-ids $instance_id
 
 #launch a load balancer  with HTTP listner
-aws elb create-load-balancer --load-balancer-name itmo-544-kro --listeners Protocol=Http,LoadBalancerPort=80,InstanceProtocol=Http,InstancePort=80 --subnets subnet-47b29123 --security-groups $3
+aws elb create-load-balancer --load-balancer-name itmo-544-kro --listeners Protocol=Http,LoadBalancerPort=80,InstanceProtocol=Http,InstancePort=80 --availability-zones us-west-2b --security-groups $3
 
 #register the running instances with the load balancer
 aws elb register-instances-with-load-balancer --load-balancer-name itmo-544-kro --instances $instance_id
@@ -191,7 +191,7 @@ echo $instance_id
 aws ec2 wait instance-running --instance-ids $instance_id
 
 #launch a load balancer  with HTTP listner
-aws elb create-load-balancer --load-balancer-name $8 --listeners Protocol=Http,LoadBalancerPort=80,InstanceProtocol=Http,InstancePort=80 --subnets subnet-47b29123 --security-groups $3
+aws elb create-load-balancer --load-balancer-name $8 --listeners Protocol=Http,LoadBalancerPort=80,InstanceProtocol=Http,InstancePort=80 --availability-zones us-west-2b --security-groups $3
 
 
 #register the running instances with the load balancer
