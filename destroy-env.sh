@@ -43,6 +43,7 @@ auto_scaling_name=`aws autoscaling describe-auto-scaling-groups --query 'AutoSca
 arrautoscaling=($auto_scaling_name)
 for autoscaling in "${arrautoscaling[@]}";
 do
+	aws autoscaling update-auto-scaling-group --auto-scaling-group-name $autoscaling --min-size 0;
 	instanceauto=`aws autoscaling describe-auto-scaling-groups --query 'AutoScalingGroups[*].Instances[].InstanceId'`;
 	aws autoscaling detach-instances --instance-ids $instanceauto --auto-scaling-group-name $autoscaling --should-decrement-desired-capacity;
 	aws autoscaling set-desired-capacity --auto-scaling-group-name $autoscaling --desired-capacity 0;
