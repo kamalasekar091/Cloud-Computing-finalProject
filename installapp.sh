@@ -13,4 +13,4 @@ git clone https://github.com/kamalasekar091/boostrap-website
 cd html
 sudo rm -rf *
 cd ..
-sudo cp -a krose1/. html/
+sudo cp -a boostrap-website/. html/
