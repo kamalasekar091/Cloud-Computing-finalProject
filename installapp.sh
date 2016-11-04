@@ -40,6 +40,7 @@ sudo cp /krose1/s3test.php /var/www/html
 cd /var/www/html/krose1
 
 sudo cp s3test.php /var/www/html/
+sudo cp dbtest.php /var/www/html/
 
 
 cd ~
