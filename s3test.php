@@ -19,6 +19,12 @@ $array = $result->toArray();
 $bucket='testupload545';
 $filepath='/var/www/html/switchonarex.png';
 
+$resultdelete = $s3->deleteObject(array(
+    'Bucket' => $bucket,
+    'Key'    => 'switchonrex.png'
+));
+
+
 $resultput = $s3->putObject(array(
     'Bucket' => $bucket,
     'Key' => 'switchonarex.png',

@@ -20,12 +20,12 @@ $url="";
 
 foreach ($result['DBInstances'] as $ep) 
 {
-    echo $ep['DBInstanceIdentifier'] . "\n";
+    echo $ep['DBInstanceIdentifier'] . "<br>";
 
     foreach($ep['Endpoint'] as $endpointurl)
 	{
-        echo $endpointurl . "\n";
-        $url=$endpointurl . "\n";
+        echo $endpointurl . "<br>";
+        $url=$endpointurl . "<br>";
 		break;
 	}
 }
@@ -38,10 +38,10 @@ $link = mysqli_connect("itmo544-krose1-mysqldb.czynbl6qv9oh.us-west-2.rds.amazon
 $drop_table = 'DROP TABLE IF EXISTS students';
 $drop_tbl = $link->query($drop_table);
 if ($drop_table) {
-        echo "Table student has been deleted";
+        echo "Table student has been deleted" . "<br>";
 }
 else {
-        echo "error!!";
+        echo "error!!" . "<br>";
 
 }
 
@@ -56,10 +56,10 @@ $create_table = 'CREATE TABLE IF NOT EXISTS students
 
 $create_tbl = $link->query($create_table);
 if ($create_table) {
-        echo "Table is created or No error returned.";
+        echo "Table is created or No error returned." . "<br>";
 }
 else {
-        echo "error!!";
+        echo "error!!" . "<br>";
 }
 
 $sql1 = "INSERT INTO students (name,age) values ('Student-1',23)";
@@ -79,12 +79,24 @@ $sql_execute3 = $link->query($sql3);
 $sql_execute4 = $link->query($sql4);
 $sql_execute5 = $link->query($sql5);
 
-if (sql_execute1 && sql_execute2 && sql_execute3 && sql_execute4 && sql_execute5 ) {
-    echo "New record created successfully";
+if ($sql_execute1 && $sql_execute2 && $sql_execute3 && $sql_execute4 && $sql_execute5 ) {
+    echo "New record created successfully" . "<br>";
 } else {
     echo "Error: " . $sql . "<br>" . $link->error;
 }
 
+$sqlselect = "SELECT * FROM students";
+$resultforselect = $link->query($sqlselect);
+
+if ($resultforselect->num_rows > 0) {
+    // output data of each row
+    while($row = $resultforselect->fetch_assoc()) {
+        echo "id: " . $row["id"]. " - Name: " . $row["name"]. " " . $row["age"]. "<br>";
+		echo "-------------------------------" . "<br>";
+    }
+} else {
+    echo "0 results";
+}
 
 $link->close();
 
