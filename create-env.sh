@@ -153,7 +153,7 @@ aws elb create-load-balancer --load-balancer-name itmo-544-kro --listeners Proto
 aws elb register-instances-with-load-balancer --load-balancer-name itmo-544-kro --instances $instance_id
 
 #creat a launch configuration to attch  it to the auto scaling group
-aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1  --key-name $2 --instance-type t2.micro --user-data file://installapp.sh --security-groups $3 --iam-instance-profile Name="masteriam"
+aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1  --key-name $2 --instance-type t2.micro --user-data file://installapp.sh --security-groups $3 --iam-instance-profile masteriam
 
 #create a auto scaling group with minumum capacity as 0 and desired capacity as 1
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name webserver_demo --launch-configuration-name $4 --availability-zones us-west-2b --min-size 0 --max-size 5 --desired-capacity 0
@@ -198,7 +198,7 @@ aws elb create-load-balancer --load-balancer-name $8 --listeners Protocol=Http,L
 aws elb register-instances-with-load-balancer --load-balancer-name $8 --instances $instance_id
 
 #creat a launch configuration to attch  it to the auto scaling group
-aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1  --key-name $2 --instance-type t2.micro --user-data file://installapp.sh --security-groups $3 --iam-instance-profile Name="masteriam"
+aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1  --key-name $2 --instance-type t2.micro --user-data file://installapp.sh --security-groups $3 --iam-instance-profile masteriam
 
 #create a auto scaling group with minumum capacity as 0 and desired capacity as 1
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name $7 --launch-configuration-name $4 --availability-zones us-west-2b --min-size 0 --max-size 5 --desired-capacity 0
