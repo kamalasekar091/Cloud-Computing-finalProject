@@ -16,7 +16,7 @@ foreach ($result['Buckets'] as $bucket) {
 // Convert the result object to a PHP array
 $array = $result->toArray();
 
-$bucket='testupload545';
+$bucket='raw-kro';
 $filepath='/var/www/html/switchonarex.png';
 
 $resultdelete = $s3->deleteObject(array(
