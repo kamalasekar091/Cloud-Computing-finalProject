@@ -10,16 +10,22 @@ echo $db_instance_id
 #aws rds wait db-instance-deleted --db-instance-identifier $db_instance_id
 #echo "instance deleted"
 
-# create an S3 bucket
-aws s3api create-bucket --bucket $1 --region us-west-2
+#Create SNS Topic 
+topic_arn_name=`aws sns create-topic --name krose-topic`
 
-aws s3api create-bucket --bucket $2 --region us-west-2
+#create Subscribe topic
+aws sns subscribe --topic-arn $topic_arn_name --protocol email --notification-endpoint kamalasekar091@gmail.com
+
+# create an S3 bucket
+aws s3api create-bucket --bucket $1 --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2
+
+aws s3api create-bucket --bucket $2 --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2
 
 #wait for bucket availability
-aws s3api bucket-exists -bucket $1
+aws s3api bucket-exists --bucket $1
 echo "$1 created"
 
-aws s3api bucket-exists -bucket $2
+aws s3api bucket-exists --bucket $2
 
 echo "$2 created"
 

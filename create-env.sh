@@ -124,7 +124,7 @@ fi
 
 if [ $# -eq 5 ]
 then
-echo "You have passed five parameter to the script"
+echo "You have passed six parameter to the script"
 echo "-----Check the parameter-----"
 valone $1 
 valtwo $2
@@ -132,10 +132,10 @@ valthree $3
 valfour $4
 valfive $5
 
-echo "validation padded for five parameter"
+echo "validation padded for six parameter"
 
 #Launching 3 new instances, using the passed parameter
-aws ec2 run-instances --image-id $1 --key-name $2 --security-group-ids $3 --client-token kr101 --instance-type t2.micro --user-data file://installapp.sh --placement AvailabilityZone=us-west-2b --count $5 --iam-instance-profile Name="masteriam"
+aws ec2 run-instances --image-id $1 --key-name $2 --security-group-ids $3 --client-token kr101 --instance-type t2.micro --user-data file://installapp.sh --placement AvailabilityZone=us-west-2b --count $5 --iam-instance-profile Name="$6"
 
 #reteriving the instances ID with given clinet token in run instances command
 instance_id=`aws ec2 describe-instances --filters "Name=client-token,Values=kr101" --query 'Reservations[*].Instances[].InstanceId'`
@@ -153,7 +153,7 @@ aws elb create-load-balancer --load-balancer-name itmo-544-kro --listeners Proto
 aws elb register-instances-with-load-balancer --load-balancer-name itmo-544-kro --instances $instance_id
 
 #creat a launch configuration to attch  it to the auto scaling group
-aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1  --key-name $2 --instance-type t2.micro --user-data file://installapp.sh --security-groups $3 --iam-instance-profile masteriam
+aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1  --key-name $2 --instance-type t2.micro --user-data file://installapp.sh --security-groups $3 --iam-instance-profile $6
 
 #create a auto scaling group with minumum capacity as 0 and desired capacity as 1
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name webserver_demo --launch-configuration-name $4 --availability-zones us-west-2b --min-size 0 --max-size 5 --desired-capacity 0
@@ -176,10 +176,10 @@ valfive $5
 valsix $6
 valseven $7
 valeight $8
-echo "validation padded for eight parameter"
+echo "validation passed for nine parameter"
 
 #Launching 3 new instances, using the passed parameter
-aws ec2 run-instances --image-id $1 --key-name $2 --security-group-ids $3 --client-token $6 --instance-type t2.micro --user-data file://installapp.sh --placement AvailabilityZone=us-west-2b --count $5 --iam-instance-profile Name="masteriam"
+aws ec2 run-instances --image-id $1 --key-name $2 --security-group-ids $3 --client-token $6 --instance-type t2.micro --user-data file://installapp.sh --placement AvailabilityZone=us-west-2b --count $5 --iam-instance-profile Name="$9"
 
 #reteriving the instances ID with given clinet token in run instances command
 instance_id=`aws ec2 describe-instances --filters "Name=client-token,Values=$6" --query 'Reservations[*].Instances[].InstanceId'`
@@ -198,7 +198,7 @@ aws elb create-load-balancer --load-balancer-name $8 --listeners Protocol=Http,L
 aws elb register-instances-with-load-balancer --load-balancer-name $8 --instances $instance_id
 
 #creat a launch configuration to attch  it to the auto scaling group
-aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1  --key-name $2 --instance-type t2.micro --user-data file://installapp.sh --security-groups $3 --iam-instance-profile masteriam
+aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1  --key-name $2 --instance-type t2.micro --user-data file://installapp.sh --security-groups $3 --iam-instance-profile $9
 
 #create a auto scaling group with minumum capacity as 0 and desired capacity as 1
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name $7 --launch-configuration-name $4 --availability-zones us-west-2b --min-size 0 --max-size 5 --desired-capacity 0
