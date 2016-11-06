@@ -22,10 +22,10 @@ aws s3api create-bucket --bucket $1 --region us-west-2 --create-bucket-configura
 aws s3api create-bucket --bucket $2 --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2
 
 #wait for bucket availability
-aws s3api bucket-exists --bucket $1
+aws s3api wait bucket-exists --bucket $1
 echo "$1 created"
 
-aws s3api bucket-exists --bucket $2
+aws s3api wait bucket-exists --bucket $2
 
 echo "$2 created"
 

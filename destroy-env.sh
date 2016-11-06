@@ -99,5 +99,78 @@ echo "No Running instance"
 fi
 
 
+echo "clearing the infrastructure"
+
+db_instance_id=`aws rds describe-db-instances --query 'DBInstances[*].DBInstanceIdentifier'`
+
+echo $db_instance_id
+
+aws rds delete-db-instance --skip-final-snapshot --db-instance-identifier $db_instance_id
+aws rds wait db-instance-deleted --db-instance-identifier $db_instance_id
+echo " DB instance deleted"
+
+echo "deleting the bucket"
+
+aws s3api delete-bucket --bucket raw-kro --region us-west-2 
+aws s3api wait bucket-not-exists --bucket raw-kro
+aws s3api delete-bucket --bucket finish-kro --region us-west-2 
+aws s3api wait bucket-not-exists --bucket finish-kro
+
+echo "buckets deleted"
+
+echo "deleting quee"
+
+listofquee=`aws sqs list-queues`
+
+echo $listofquee
+
+arrlist=($listofquee)
+
+for listname in "${arrlist[@]}";
+do
+echo $listname
+
+if [ $listname == "QUEUEURLS" ]
+then
+
+echo "the first value cannot be deleted"
+
+else
+aws sqs delete-queue --queue-url $listname
+
+fi
+
+done
+
+echo "quee Cleared"
+
+echo " Working on clearing the topic in SNS"
+
+listoftopic=`aws sns list-topics`
+
+echo $listoftopic
+
+arrtopic=($listoftopic)
+
+for listtopic in "${arrtopic[@]}";
+do
+echo $listtopic
+
+if [ $listtopic == "TOPICS" ]
+then
+
+echo "the first value cannot be deleted"
+
+else
+
+aws sns delete-topic --topic-arn $listtopic
+
+fi
+
+done
+
+echo "Cleared the topics"
+
+
 echo "AWS env cleared"
 
