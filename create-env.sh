@@ -122,7 +122,7 @@ fi
 
 }
 
-if [ $# -eq 5 ]
+if [ $# -eq 6 ]
 then
 echo "You have passed six parameter to the script"
 echo "-----Check the parameter-----"
@@ -166,7 +166,7 @@ aws autoscaling attach-load-balancers --load-balancer-names itmo-544-kro --auto-
 
 echo "creation succesful"
 
-elif [ $# -eq 8 ]
+elif [ $# -eq 9 ]
 then
 valone $1 
 valtwo $2
