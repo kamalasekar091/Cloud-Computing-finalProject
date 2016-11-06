@@ -1,5 +1,7 @@
 <?php
 
+echo "<h1 style=\"color:blue;\" align=\"center\">Data Base Test Page</h1>";
+
 require 'vendor/autoload.php';
 
 use Aws\Rds\RdsClient;
@@ -24,7 +26,9 @@ foreach ($result['DBInstances'] as $ep)
 
     foreach($ep['Endpoint'] as $endpointurl)
 	{
+        echo "<h4>The url used to connect to the database</h4>";
         echo $endpointurl . "<br>";
+	echo "<br>";
         $url=$endpointurl;
 		break;
 	}
@@ -88,15 +92,34 @@ if ($sql_execute1 && $sql_execute2 && $sql_execute3 && $sql_execute4 && $sql_exe
 $sqlselect = "SELECT * FROM students";
 $resultforselect = $link->query($sqlselect);
 
+echo "<h3> Result of the select query <h3>";
+echo "<hr>";
+
+echo "<table border=\"1\">";
+     echo "<tr>";
+         echo "<td>ID</td>";
+         echo "<td>Name</td>";
+         echo "<td>Age</td>";
+         echo "</tr>";
+
+
 if ($resultforselect->num_rows > 0) {
     // output data of each row
     while($row = $resultforselect->fetch_assoc()) {
-        echo "id: " . $row["id"]. " - Name: " . $row["name"]. " " . $row["age"]. "<br>";
-		echo "-------------------------------" . "<br>";
+
+	echo "<tr>";
+                echo "<td>" . $row["id"]. "</td>";
+                echo "<td>" . $row["name"]. "</td>";
+                echo "<td>" . $row["age"]. "</td>";
+                echo "</tr>";
+//        echo "id: " . $row["id"]. " - Name: " . $row["name"]. " " . $row["age"]. "<br>";
+//		echo "-------------------------------" . "<br>";
     }
 } else {
     echo "0 results";
 }
+
+echo "</table>";
 
 $link->close();
 
