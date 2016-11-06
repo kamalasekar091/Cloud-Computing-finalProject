@@ -25,13 +25,13 @@ foreach ($result['DBInstances'] as $ep)
     foreach($ep['Endpoint'] as $endpointurl)
 	{
         echo $endpointurl . "<br>";
-        $url=$endpointurl . "<br>";
+        $url=$endpointurl;
 		break;
 	}
 }
 
 
-$link = mysqli_connect("itmo544-krose1-mysqldb.czynbl6qv9oh.us-west-2.rds.amazonaws.com","controller","controllerpass","school","3306") or die("Error " . mysqli_error($link));
+$link = mysqli_connect($url,"controller","controllerpass","school","3306") or die("Error " . mysqli_error($link));
 
 // echo "Here is the result: " . $link;
 
