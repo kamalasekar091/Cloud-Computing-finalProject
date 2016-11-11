@@ -41,7 +41,7 @@ $link = mysqli_connect($url,"controller","controllerpass","school","3306") or di
 
 $drop_table = 'DROP TABLE IF EXISTS students';
 $drop_tbl = $link->query($drop_table);
-if ($drop_table) {
+if ($drop_tbl) {
         echo "Table student has been deleted" . "<br>";
 }
 else {
@@ -59,7 +59,7 @@ $create_table = 'CREATE TABLE IF NOT EXISTS students
 )';
 
 $create_tbl = $link->query($create_table);
-if ($create_table) {
+if ($create_tbl) {
         echo "Table is created or No error returned." . "<br>";
 }
 else {

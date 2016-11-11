@@ -6,6 +6,15 @@ echo $db_instance_id
 aws rds wait db-instance-available --db-instance-identifier $db_instance_id
 echo "Data base created"
 echo $db_instance_id
+db_instance_url=`aws rds describe-db-instances --query 'DBInstances[*].Endpoint[].Address'`
+mysql --host=$db_instance_url --user='controller' --password='controllerpass' school << EOF
+create table credentials (ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userName VARCHAR(30) NOT NULL, userPass VARCHAR(30) NOT NULL);
+INSERT INTO credentials (userName,userPass) VALUES ('krose1','letmein');
+INSERT INTO credentials (userName,userPass) VALUES ('jrh','letmein');
+INSERT INTO credentials (userName,userPass) VALUES ('controller','letmein');
+commit;
+EOF
+
 #aws rds delete-db-instance --skip-final-snapshot --db-instance-identifier $db_instance_id
 #aws rds wait db-instance-deleted --db-instance-identifier $db_instance_id
 #echo "instance deleted"
