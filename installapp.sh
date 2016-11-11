@@ -41,6 +41,10 @@ cd /var/www/html/krose1
 
 sudo cp s3test.php /var/www/html/
 sudo cp dbtest.php /var/www/html/
+sudo cp index.php /var/www/html/
+sudo cp welcome.php /var/www/html/
+sudo cp upload.php /var/www/html/
+sudo cp image_validation.php /var/www/html/
 
 
 cd ~
