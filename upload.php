@@ -1,9 +1,8 @@
 <?php
+session_start();
     // Include the SDK using the Composer autoloader
      require 'vendor/autoload.php';
-     // use Aws\S3\S3Client;
-     // use Aws\S3\Exception\S3Exception;
-         $s3 = new Aws\S3\S3Client([
+     $s3 = new Aws\S3\S3Client([
     'version' => 'latest',
     'region'  => 'us-west-2'
 ]);
@@ -18,62 +17,82 @@ $size = $_FILES['file']['size'];
 $tmp = $_FILES['file']['tmp_name'];
 $ext = getExtension($name);
 
-if(strlen($name) > 0)
-{
-// File format validation
-        if(in_array($ext,$valid_formats))
-        {
-// File size validation
-        if($size<(1024*1024))
-        {
-        //include('config_s3.php');
-//Rename image name.
-        $image_name_actual = time().".".$ext;
 
-        try {
-echo $ext;
-echo $image_name_actual;
 $resultput = $s3->putObject(array(
              'Bucket'=>'raw-kros',
-             'Key' =>  $image_name_actual,
+             'Key' =>  $name,
              'SourceFile' => $tmp,
              'region' => 'us-west-2',
               'ACL'    => 'public-read'
         ));
         $message = "S3 Upload Successful.";
         $imageurl=$resultput['ObjectURL'];
-        $s3file='http://'.$bucket.'.s3.amazonaws.com/'.$actual_image_name;
-        echo "<img src='$imageurl' height=\'500\' width=\'600\'/>";
-        echo 'S3 File URL:'.$s3file;
-
-    } catch (S3Exception $e) {
-         // Catch an S3 specific exception.
-        echo $e->getMessage();
-    }
-	//else
-// $message = "Image size Max 1 MB";
-
+if($imageurl){
+$_SESSION['imageurl']=$imageurl;
+$_SESSION['keyname']=$name;
+header( "Location: uploader.php" );
 }
-//else
-//$message = "Invalid file, please upload image file.";
-
 }
-//else
- //$message = "Please select image file.";
-
-}}
 
 ?>
-
 <html>
 <head>
-<title>Upload Image</title>
+<title>Uploaded Image</title>
+<style>
+body {
+    margin: 0;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-bottom: 1px solid #555;
+}
+
+li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+</style>
 </head>
 <body>
-<form action="" method='post' enctype="multipart/form-data">
+
+<ul>
+  <li><a href="/welcome.php">Home</a></li>
+  <li><a href="/gallery.php">Gallery</a></li>
+  <li><a class="active" href="/upload.php">Upload</a></li>
+  <li><a href="/admin.php">Admin</a></li>
+</ul>
+
+<div style="margin-left:25%;padding:1px 16px;height:1000px;">
+<h4 style="float:right" >welcome: <?php echo $_SESSION['username']; ?></h4>
+<br>
+<br>
+<br>
+<form action='' method='post' enctype="multipart/form-data">
 Upload image file here
-<input type='file' name='file'/> <input type='submit' value='Upload Image'/>
+<input type='file' name='file'/>
+<br>
+<input type='submit' value='Upload Image'/>
+<br>
 <?php echo $msg; ?>
 </form>
+</div>
 </body>
 </html>

@@ -1,9 +1,14 @@
 <?php
 session_start();
-?>
 
+if($_SERVER['REQUEST_METHOD'] == "POST")
+{
+	header( "Location: upload.php" );
+}
+?>
 <html>
 <head>
+<title>Uploaded Image</title>
 <style>
 body {
     margin: 0;
@@ -42,7 +47,7 @@ li a:hover:not(.active) {
 <body>
 
 <ul>
-  <li><a class="active" href="/welcome.php">Home</a></li>
+  <li><a href="/welcome.php">Home</a></li>
   <li><a href="/gallery.php">Gallery</a></li>
   <li><a href="/upload.php">Upload</a></li>
   <li><a href="/admin.php">Admin</a></li>
@@ -50,7 +55,12 @@ li a:hover:not(.active) {
 
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 <h4 style="float:right" >welcome: <?php echo $_SESSION['username']; ?></h4>
-  <h1> Please select the option in left hand side</h1>
+<form action="" method='post' enctype="multipart/form-data">
+<h1><?php echo $_SESSION['keyname']; ?><h1>
+<img src="<?php echo $_SESSION['imageurl']; ?>" height="500" width="600">
+<br>
+<input type='submit' value='Return to upload PHP'/>
+</form>
 </div>
 </body>
 </html>
