@@ -68,10 +68,10 @@ $conn->close();
 
 $_SESSION['receipt']=$receipt;
   
-if($_SERVER['REQUEST_METHOD'] == "POST")
-{
-	header( "Location: upload.php" );
-}
+//if($_SERVER['REQUEST_METHOD'] == "POST")
+//{
+//	header( "Location: upload.php" );
+//}
 
 ?>
 
