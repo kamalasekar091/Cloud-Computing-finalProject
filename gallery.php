@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require 'vendor/autoload.php';
 
 use Aws\Rds\RdsClient;
@@ -9,9 +10,11 @@ $client = RdsClient::factory(array(
 'region'  => 'us-west-2'
 ));
 
+
 $result = $client->describeDBInstances(array(
     'DBInstanceIdentifier' => 'itmo544-krose1-mysqldb',
 ));
+
 
 $endpoint = "";
 $url="";
@@ -22,40 +25,35 @@ foreach ($result['DBInstances'] as $ep)
 
     foreach($ep['Endpoint'] as $endpointurl)
         {
-        echo "<h4>The url used to connect to the database</h4>";
-        echo $endpointurl . "<br>";
-echo "<br>";
         $url=$endpointurl;
                 break;
         }
 }
 
-$conn = mysqli_connect($url,"controller","controllerpass","school","3306") or die("Error " . mysqli_error($link));
-$statusnumber=0;
 
-if (!($stmt2 = $conn->prepare("INSERT INTO records (id,email,phone,s3_raw_url,s3_finished_url,status,receipt) VALUES (NULL,?, ?, ?, ?, ?, ?)"))) {
-    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
-}
+$link = mysqli_connect($url,"controller","controllerpass","school","3306") or die("Error " . mysqli_error($link));
 
-$stmt = $conn->prepare("INSERT INTO records (email,phone,s3_raw_url,s3_finished_url,status,receipt) VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("ssssss", $email, $phone, $s3_raw_url,$s3_finished_url,$status,$receipt);
-$email="kamalasekar091@gmail.com";
-$phone="6036744303";
-$s3_raw_url=$_SESSION['imageurl'];
-$s3_finished_url="summa";
-$status=$statusnumber;
-$receipt=md5($_SESSION['imageurl']);
-$stmt->execute();
-$stmt->close();
-$conn->close();
+$sqlselect = "SELECT s3_raw_url FROM records";
+$resultforselect = $link->query($sqlselect);
 
 
-if($_SERVER['REQUEST_METHOD'] == "POST")
-{
-	header( "Location: upload.php" );
-}
+
+// if ($resultforselect->num_rows > 0) {
+    // output data of each row
+//   while($row = $resultforselect->fetch_assoc()) {
+
+        //echo "<img src='$row[\"s3_raw_url\"]' height=\'500\' width=\'600\'/>";
+    //}
+// } else {
+    //echo "0 results";
+ //}
+
+
+// $link->close();
+
 
 ?>
+
 <html>
 <head>
 <title>Uploaded Image</title>
@@ -98,24 +96,34 @@ li a:hover:not(.active) {
 
 <ul>
   <li><a href="/welcome.php">Home</a></li>
-  <li><a href="/gallery.php">Gallery</a></li>
+  <li><a class="active" href="/gallery.php">Gallery</a></li>
   <li><a href="/upload.php">Upload</a></li>
 <?php
 if($_SESSION['username']=="controller"){
 echo "<li><a href=\"/admin.php\">Admin</a></li>";
 }
 ?>
-
+  
 </ul>
 
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 <h4 style="float:right" >welcome: <?php echo $_SESSION['username']; ?></h4>
-<form action="" method='post' enctype="multipart/form-data">
-<h1><?php echo $_SESSION['keyname']; ?><h1>
-<img src="<?php echo $_SESSION['imageurl']; ?>" height="500" width="600">
 <br>
-<input type='submit' value='Return to upload PHP'/>
-</form>
+<br>
+<br>
+<?php
+if ($resultforselect->num_rows > 0) {
+    // output data of each row
+    while($row = $resultforselect->fetch_assoc()) {
+		$value=$row["s3_raw_url"];
+
+        echo "<img src='$value' height=\"200\" width=\"200\"/>";
+    }
+} else {
+    echo "0 results";
+}
+$link->close();
+?>
 </div>
 </body>
 </html>

@@ -69,6 +69,30 @@ li a:hover:not(.active) {
     background-color: #555;
     color: white;
 }
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button2 {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -76,8 +100,14 @@ li a:hover:not(.active) {
 <ul>
   <li><a href="/welcome.php">Home</a></li>
   <li><a href="/gallery.php">Gallery</a></li>
+
   <li><a class="active" href="/upload.php">Upload</a></li>
-  <li><a href="/admin.php">Admin</a></li>
+<?php
+if($_SESSION['username']=="controller"){
+echo "<li><a href=\"/admin.php\">Admin</a></li>";
+}
+?>
+  
 </ul>
 
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
@@ -86,10 +116,12 @@ li a:hover:not(.active) {
 <br>
 <br>
 <form action='' method='post' enctype="multipart/form-data">
-Upload image file here
-<input type='file' name='file'/>
+<h1 style="color:blue;">Upload image file here</h1>
+<input class"button2" type='file' name='file'/>
 <br>
-<input type='submit' value='Upload Image'/>
+<br>
+<br>
+<input class="button" type='submit' value='Upload Image'/>
 <br>
 <?php echo $msg; ?>
 </form>
