@@ -19,7 +19,7 @@ $ext = getExtension($name);
 
 
 $resultput = $s3->putObject(array(
-             'Bucket'=>'raw-kros',
+             'Bucket'=>'raw-kro',
              'Key' =>  $name,
              'SourceFile' => $tmp,
              'region' => 'us-west-2',
