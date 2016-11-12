@@ -8,7 +8,7 @@ echo "Data base created"
 echo $db_instance_id
 db_instance_url=`aws rds describe-db-instances --query 'DBInstances[*].Endpoint[].Address'`
 mysql --host=$db_instance_url --user='controller' --password='controllerpass' school << EOF
-CREATE TABLE records(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,email VARCHAR(32),phone VARCHAR(32),s3-raw-url VARCHAR(32),s3-finished-url VARCHAR(32),status INT(1),receipt VARCHAR(256));
+CREATE TABLE records(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,email VARCHAR(32),phone VARCHAR(32),s3_raw_url VARCHAR(32),s3_finished_url VARCHAR(32),status INT(1),receipt VARCHAR(256));
 create table credentials (ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userName VARCHAR(30) NOT NULL, userPass VARCHAR(30) NOT NULL);
 INSERT INTO credentials (userName,userPass) VALUES ('krose1','letmein');
 INSERT INTO credentials (userName,userPass) VALUES ('jrh','letmein');
@@ -24,7 +24,7 @@ EOF
 topic_arn_name=`aws sns create-topic --name krose-topic`
 
 #create Subscribe topic
-aws sns subscribe --topic-arn $topic_arn_name --protocol email --notification-endpoint kamalasekar091@gmail.com
+#aws sns subscribe --topic-arn $topic_arn_name --protocol email --notification-endpoint kamalasekar091@gmail.com
 
 # create an S3 bucket
 aws s3api create-bucket --bucket $1 --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2
