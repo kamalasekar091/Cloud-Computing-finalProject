@@ -1,5 +1,6 @@
-<?php
+<?php 
 session_start();
+
 require 'vendor/autoload.php';
 
 use Aws\Rds\RdsClient;
@@ -9,53 +10,71 @@ $client = RdsClient::factory(array(
 'region'  => 'us-west-2'
 ));
 
+$s3 = new Aws\S3\S3Client([
+    'version' => 'latest',
+    'region'  => 'us-west-2'
+]);
+
 $result = $client->describeDBInstances(array(
     'DBInstanceIdentifier' => 'itmo544-krose1-mysqldb',
 ));
-
 $endpoint = "";
 $url="";
-
 foreach ($result['DBInstances'] as $ep)
 {
    // echo $ep['DBInstanceIdentifier'] . "<br>";
-
     foreach($ep['Endpoint'] as $endpointurl)
         {
-        echo "<h4>The url used to connect to the database</h4>";
-        echo $endpointurl . "<br>";
-echo "<br>";
+
         $url=$endpointurl;
-                break;
+        break;
         }
 }
-
 $conn = mysqli_connect($url,"controller","controllerpass","school","3306") or die("Error " . mysqli_error($link));
-$statusnumber=0;
+
+$name=$_FILES["fileToUpload"]["name"];
+
+$tmp=$_FILES['fileToUpload']['tmp_name'];
+
+$resultput = $s3->putObject(array(
+             'Bucket'=>'raw-kro',
+             'Key' =>  $name,
+             'SourceFile' => $tmp,
+             'region' => 'us-west-2',
+              'ACL'    => 'public-read'
+        ));
+        
+$imageurl=$resultput['ObjectURL'];
+
+$_SESSION['s3-raw']=$imageurl;
+        
 
 if (!($stmt2 = $conn->prepare("INSERT INTO records (id,email,phone,s3_raw_url,s3_finished_url,status,receipt) VALUES (NULL,?, ?, ?, ?, ?, ?)"))) {
     echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }
 
 $stmt = $conn->prepare("INSERT INTO records (email,phone,s3_raw_url,s3_finished_url,status,receipt) VALUES (?, ?, ?, ?, ?, ?)");
+$statusnumber=0;
 $stmt->bind_param("ssssss", $email, $phone, $s3_raw_url,$s3_finished_url,$status,$receipt);
 $email="kamalasekar091@gmail.com";
 $phone="6036744303";
-$s3_raw_url=$_SESSION['imageurl'];
+$s3_raw_url=$imageurl;
 $s3_finished_url="summa";
 $status=$statusnumber;
-$receipt=md5($_SESSION['imageurl']);
+$receipt=md5($imageurl);
 $stmt->execute();
 $stmt->close();
 $conn->close();
 
-
+$_SESSION['receipt']=$receipt;
+  
 if($_SERVER['REQUEST_METHOD'] == "POST")
 {
 	header( "Location: upload.php" );
 }
 
 ?>
+
 <html>
 <head>
 <title>Uploaded Image</title>
@@ -63,7 +82,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 body {
     margin: 0;
 }
-
 ul {
     list-style-type: none;
     margin: 0;
@@ -74,7 +92,6 @@ ul {
     height: 100%;
     overflow: auto;
 }
-
 li a {
     display: block;
     color: #000;
@@ -82,16 +99,35 @@ li a {
     text-decoration: none;
     border-bottom: 1px solid #555;
 }
-
 li a.active {
     background-color: #4CAF50;
     color: white;
 }
-
 li a:hover:not(.active) {
     background-color: #555;
     color: white;
 }
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.buttonreturn{
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
 </style>
 </head>
 <body>
@@ -111,10 +147,11 @@ echo "<li><a href=\"/admin.php\">Admin</a></li>";
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 <h4 style="float:right" >welcome: <?php echo $_SESSION['username']; ?></h4>
 <form action="" method='post' enctype="multipart/form-data">
-<h1><?php echo $_SESSION['keyname']; ?><h1>
-<img src="<?php echo $_SESSION['imageurl']; ?>" height="500" width="600">
+<h3>Name of the image: <?php echo $name; ?><h3>
+<img src="<?php echo $imageurl; ?>" height="200" width="200">
 <br>
-<input type='submit' value='Return to upload PHP'/>
+<br>
+<a class="buttonreturn"href="/upload.php">This is a link</a>
 </form>
 </div>
 </body>
