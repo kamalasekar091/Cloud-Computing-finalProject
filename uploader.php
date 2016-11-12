@@ -1,10 +1,60 @@
 <?php
 session_start();
+require 'vendor/autoload.php';
+
+use Aws\Rds\RdsClient;
+
+$client = RdsClient::factory(array(
+'version' => 'latest',
+'region'  => 'us-west-2'
+));
+
+$result = $client->describeDBInstances(array(
+    'DBInstanceIdentifier' => 'itmo544-krose1-mysqldb',
+));
+
+$endpoint = "";
+$url="";
+
+foreach ($result['DBInstances'] as $ep)
+{
+   // echo $ep['DBInstanceIdentifier'] . "<br>";
+
+    foreach($ep['Endpoint'] as $endpointurl)
+        {
+        echo "<h4>The url used to connect to the database</h4>";
+        echo $endpointurl . "<br>";
+echo "<br>";
+        $url=$endpointurl;
+                break;
+        }
+}
+
+$conn = mysqli_connect($url,"controller","controllerpass","school","3306") or die("Error " . mysqli_error($link));
+$statusnumber=0;
+
+if (!($stmt2 = $conn->prepare("INSERT INTO records (id,email,phone,s3_raw_url,s3_finished_url,status,receipt) VALUES (NULL,?, ?, ?, ?, ?, ?)"))) {
+    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+}
+
+$stmt = $conn->prepare("INSERT INTO records (email,phone,s3_raw_url,s3_finished_url,status,receipt) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("ssssss", $email, $phone, $s3_raw_url,$s3_finished_url,$status,$receipt);
+$email="kamalasekar091@gmail.com";
+$phone="6036744303";
+$s3_raw_url=$_SESSION['imageurl'];
+$s3_finished_url="summa";
+$status=$statusnumber;
+$receipt=md5($_SESSION['imageurl']);
+$stmt->execute();
+$stmt->close();
+$conn->close();
+
 
 if($_SERVER['REQUEST_METHOD'] == "POST")
 {
 	header( "Location: upload.php" );
 }
+
 ?>
 <html>
 <head>
