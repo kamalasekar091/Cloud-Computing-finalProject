@@ -147,11 +147,14 @@ echo "<li><a href=\"/admin.php\">Admin</a></li>";
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 <h4 style="float:right" >welcome: <?php echo $_SESSION['username']; ?></h4>
 <form action="" method='post' enctype="multipart/form-data">
+<h1>Success!</h1>
+<br>
+<br>
 <h3>Name of the image: <?php echo $name; ?><h3>
 <img src="<?php echo $imageurl; ?>" height="200" width="200">
 <br>
 <br>
-<a class="buttonreturn"href="/upload.php">This is a link</a>
+<a class="buttonreturn"href="/upload.php">Go To Upload</a>
 </form>
 </div>
 </body>

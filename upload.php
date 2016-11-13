@@ -60,7 +60,7 @@ echo "<li><a href=\"/admin.php\">Admin</a></li>";
 
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 <h4 style="float:right" >welcome: <?php echo $_SESSION['username']; ?></h4>
-<form action="upload.php" method="post" enctype="multipart/form-data">
+<form action="uploader.php" method="post" enctype="multipart/form-data">
     <h3>Select image to upload:</h3>
     <br>
     <br>
