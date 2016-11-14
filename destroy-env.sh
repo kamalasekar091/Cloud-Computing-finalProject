@@ -110,7 +110,7 @@ aws rds wait db-instance-deleted --db-instance-identifier $db_instance_id
 echo " DB instance deleted"
 
 echo "deleting the bucket"
-
+aws s3api delete-object --bucket raw-kro --key switchonarex.jpg
 aws s3api delete-object --bucket raw-kro --key switchonarex.png
 aws s3api delete-bucket --bucket raw-kro --region us-west-2 
 aws s3api wait bucket-not-exists --bucket raw-kro
