@@ -141,7 +141,7 @@ if($_SESSION['username']=="controller"){
 echo "<li><a href=\"/admin.php\">Admin</a></li>";
 }
 ?>
-
+<li><a href="/logout.php">Log Out</a></li>
 </ul>
 
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
