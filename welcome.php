@@ -1,5 +1,9 @@
 <?php
 session_start();
+include 'checkuploadenabled.php';
+
+$variable=returnenabledstatus();
+
 ?>
 
 <html>
@@ -44,8 +48,10 @@ li a:hover:not(.active) {
 <ul>
   <li><a class="active" href="/welcome.php">Home</a></li>
   <li><a href="/gallery.php">Gallery</a></li>
-  <li><a href="/upload.php">Upload</a></li>
 <?php
+if($variable == 'on'){
+  echo"<li><a href=\"/upload.php\">Upload</a></li>";
+}
 if($_SESSION['username']=="controller"){
 echo "<li><a href=\"/admin.php\">Admin</a></li>";
 }
