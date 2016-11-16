@@ -10,9 +10,9 @@ $variable=returnenabledstatus();
 <head>
 <meta charset=utf-8 />
 <title>ADMIN</title>
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
 <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script> -->
 <style>
 body {
     margin: 0;
@@ -68,11 +68,14 @@ echo "<li><a href=\"/admin.php\">Admin</a></li>";
 <h4 style="float:right" >welcome: <?php echo $_SESSION['username']; ?></h4>
 <br>
 <h1>Currently the value is <?php if($variable == 'on'){echo 'ENABLED'; }  else {echo 'DISABLED'; } ?> for all user</h1>
+<br>
+<br>
 <form id='login' action='changestatus.php' method='post' accept-charset='UTF-8'>
 <select data-role="slider" name="flagstatus" id="flag">
 <option value="off" accesskey="">OFF</option>
 <option value="on">ON</option>
 </select>
+<br>
 <br>
 <input type='submit' name='Submit' value='Submit' />
 </form>
