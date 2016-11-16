@@ -45,9 +45,11 @@ sudo cp index.php /var/www/html/
 sudo cp welcome.php /var/www/html/
 sudo cp upload.php /var/www/html/
 sudo cp uploader.php /var/www/html/
-sudo cp gallery.php /var/www/html
+sudo cp gallery.php /var/www/html/
 sudo cp image_validation.php /var/www/html/
-
+sudo cp checkuploadenabled.php /var/www/html/
+sudo cp admin.php /var/www/html/
+sudo cp changestatus.php /var/www/html/
 
 cd ~
 

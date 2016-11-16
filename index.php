@@ -15,7 +15,6 @@ $result = $client->describeDBInstances(array(
 $endpoint = "";
 $url = "";
 foreach ($result['DBInstances'] as $ep) {
-    echo $ep['DBInstanceIdentifier'] . "<br>";
     foreach ($ep['Endpoint'] as $endpointurl) {
 
 

@@ -5,6 +5,10 @@ require 'vendor/autoload.php';
 
 use Aws\Rds\RdsClient;
 
+include 'checkuploadenabled.php';
+
+$variable=returnenabledstatus();
+
 $client = RdsClient::factory(array(
 'version' => 'latest',
 'region'  => 'us-west-2'
@@ -68,10 +72,6 @@ $conn->close();
 
 $_SESSION['receipt']=$receipt;
   
-//if($_SERVER['REQUEST_METHOD'] == "POST")
-//{
-//	header( "Location: upload.php" );
-//}
 
 ?>
 
@@ -135,8 +135,10 @@ li a:hover:not(.active) {
 <ul>
   <li><a href="/welcome.php">Home</a></li>
   <li><a href="/gallery.php">Gallery</a></li>
-  <li><a href="/upload.php">Upload</a></li>
 <?php
+if($variable == 'on'){
+  echo"<li><a href=\"/upload.php\">Upload</a></li>";
+}
 if($_SESSION['username']=="controller"){
 echo "<li><a href=\"/admin.php\">Admin</a></li>";
 }

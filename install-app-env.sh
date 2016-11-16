@@ -8,11 +8,11 @@ echo "Data base created"
 echo $db_instance_id
 db_instance_url=`aws rds describe-db-instances --query 'DBInstances[*].Endpoint[].Address'`
 mysql --host=$db_instance_url --user='controller' --password='controllerpass' school << EOF
-CREATE TABLE records(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,email VARCHAR(32),phone VARCHAR(32),s3_raw_url VARCHAR(255),s3_finished_url VARCHAR(255),status INT(1),receipt VARCHAR(256));
-create table credentials (ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userName VARCHAR(30) NOT NULL, userPass VARCHAR(30) NOT NULL);
-INSERT INTO credentials (userName,userPass) VALUES ('krose1','letmein');
-INSERT INTO credentials (userName,userPass) VALUES ('jrh','letmein');
-INSERT INTO credentials (userName,userPass) VALUES ('controller','letmein');
+CREATE TABLE records(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,email VARCHAR(255),phone VARCHAR(255),s3_raw_url VARCHAR(255),s3_finished_url VARCHAR(255),status INT(1),receipt VARCHAR(256));
+create table credentials (ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userName VARCHAR(255) NOT NULL, userPass VARCHAR(255) NOT NULL, status varchar(255));
+INSERT INTO credentials (userName,userPass,status) VALUES ('krose1','letmein','on');
+INSERT INTO credentials (userName,userPass,status) VALUES ('jrh','letmein','on');
+INSERT INTO credentials (userName,userPass,status) VALUES ('controller','letmein','on');
 commit;
 EOF
 

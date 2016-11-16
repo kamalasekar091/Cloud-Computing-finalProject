@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include 'checkuploadenabled.php';
 
 $variable=returnenabledstatus();
@@ -6,11 +8,16 @@ $variable=returnenabledstatus();
 ?>
 <html>
 <head>
-<title>Uploaded Image</title>
+<meta charset=utf-8 />
+<title>ADMIN</title>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
 <style>
 body {
     margin: 0;
 }
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -21,6 +28,7 @@ ul {
     height: 100%;
     overflow: auto;
 }
+
 li a {
     display: block;
     color: #000;
@@ -28,25 +36,15 @@ li a {
     text-decoration: none;
     border-bottom: 1px solid #555;
 }
+
 li a.active {
     background-color: #4CAF50;
     color: white;
 }
+
 li a:hover:not(.active) {
     background-color: #555;
     color: white;
-}
-.button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
 }
 </style>
 </head>
@@ -63,20 +61,24 @@ if($_SESSION['username']=="controller"){
 echo "<li><a href=\"/admin.php\">Admin</a></li>";
 }
 ?>
-<li><a href="/logout.php">Log Out</a></li>
+
 </ul>
 
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 <h4 style="float:right" >welcome: <?php echo $_SESSION['username']; ?></h4>
-<form action="uploader.php" method="post" enctype="multipart/form-data">
-    <h3>Select image to upload:</h3>
-    <br>
-    <br>
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <br>
-    <br>
-    <input class="button" type="submit" value="Upload Image" name="submit">
+<br>
+<h1>Currently the value is <?php if($variable == 'on'){echo 'ENABLED'; }  else {echo 'DISABLED'; } ?> for all user</h1>
+<form id='login' action='changestatus.php' method='post' accept-charset='UTF-8'>
+<select data-role="slider" name="flagstatus" id="flag">
+<option value="off" accesskey="">OFF</option>
+<option value="on">ON</option>
+</select>
+<br>
+<input type='submit' name='Submit' value='Submit' />
 </form>
+<script>
+ $('#flag option[value=<?php echo $variable; ?>]').prop('selected', true);
+</script>
 </div>
 </body>
 </html>

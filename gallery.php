@@ -5,6 +5,10 @@ require 'vendor/autoload.php';
 
 use Aws\Rds\RdsClient;
 
+include 'checkuploadenabled.php';
+
+$variable=returnenabledstatus();
+
 $client = RdsClient::factory(array(
 'version' => 'latest',
 'region'  => 'us-west-2'
@@ -35,21 +39,6 @@ $link = mysqli_connect($url,"controller","controllerpass","school","3306") or di
 
 $sqlselect = "SELECT s3_raw_url FROM records";
 $resultforselect = $link->query($sqlselect);
-
-
-
-// if ($resultforselect->num_rows > 0) {
-    // output data of each row
-//   while($row = $resultforselect->fetch_assoc()) {
-
-        //echo "<img src='$row[\"s3_raw_url\"]' height=\'500\' width=\'600\'/>";
-    //}
-// } else {
-    //echo "0 results";
- //}
-
-
-// $link->close();
 
 
 ?>
@@ -118,8 +107,10 @@ li a:hover:not(.active) {
 <ul>
   <li><a href="/welcome.php">Home</a></li>
   <li><a class="active" href="/gallery.php">Gallery</a></li>
-  <li><a href="/upload.php">Upload</a></li>
 <?php
+if($variable == 'on'){
+  echo"<li><a href=\"/upload.php\">Upload</a></li>";
+}
 if($_SESSION['username']=="controller"){
 echo "<li><a href=\"/admin.php\">Admin</a></li>";
 }
