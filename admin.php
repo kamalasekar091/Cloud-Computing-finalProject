@@ -79,6 +79,12 @@ echo "<li><a href=\"/admin.php\">Admin</a></li>";
 <br>
 <input type='submit' name='Submit' value='Submit' />
 </form>
+<br>
+<br>
+<hr>
+<form action='backup.php' method='post'>
+<input type='submit' value='Restore the entire database' />
+</form>
 <script>
  $('#flag option[value=<?php echo $variable; ?>]').prop('selected', true);
 </script>

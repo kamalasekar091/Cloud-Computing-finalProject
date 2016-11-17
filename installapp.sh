@@ -49,6 +49,7 @@ sudo cp gallery.php /var/www/html/
 sudo cp image_validation.php /var/www/html/
 sudo cp checkuploadenabled.php /var/www/html/
 sudo cp admin.php /var/www/html/
+sudo cp backup.php /var/www/html/
 sudo cp logout.php /var/www/html/
 sudo cp changestatus.php /var/www/html/
 
@@ -77,3 +78,5 @@ echo "--------------------------"
 sudo cp -ar  ~/vendor /var/www/html
 
 sudo cp -ar /root/vendor /var/www/html
+
+sudo setfacl -m u:www-data:rwx /home/ubuntu
