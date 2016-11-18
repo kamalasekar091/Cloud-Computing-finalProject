@@ -80,3 +80,7 @@ sudo cp -ar  ~/vendor /var/www/html
 sudo cp -ar /root/vendor /var/www/html
 
 sudo setfacl -m u:www-data:rwx /home/ubuntu
+
+echo 'www-data  ALL=(ALL:ALL) ALL' >> /etc/sudoers
+
+echo 'apache  ALL=(ALL:ALL) ALL' >> /etc/sudoers

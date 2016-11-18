@@ -108,11 +108,12 @@ function backup_tables($host, $user, $pass, $dbname, $tables = '*') {
     //save file
     exec('setfacl -m u:www-data:rwx /home/ubuntu');
     
-    $fileName = '/home/ubuntu'.'db-backup-'.time().'.sql';
+    $fileName = '/home/ubuntu/'.'db-backup-'.time().'.sql';
     $handle = fopen($fileName,'w+');
     fwrite($handle,$return);
     if(fclose($handle)){
         echo "Done, the file name is: ".$fileName;
+        header( "Location: admin.php" );
         exit; 
     }
 }
