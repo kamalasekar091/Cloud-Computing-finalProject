@@ -3,11 +3,18 @@ session_start();
 
 require 'vendor/autoload.php';
 
+use Aws\Sqs\SqsClient;
+
 use Aws\Rds\RdsClient;
 
 include 'checkuploadenabled.php';
 
 $variable=returnenabledstatus();
+
+$sqsclient = SqsClient::factory(array(
+       'version' => 'latest',
+      'region'  => 'us-west-2'
+));
 
 $client = RdsClient::factory(array(
 'version' => 'latest',
@@ -72,6 +79,15 @@ $conn->close();
 
 $_SESSION['receipt']=$receipt;
   
+$queueUrl = $sqsclient->getQueueUrl(array(
+    // QueueName is required
+    'QueueName' => 'kro-queue',
+));
+
+$sqsclient->sendMessage(array(
+    'QueueUrl'    => $queueUrl['QueueUrl'],
+    'MessageBody' => $_SESSION['receipt'],
+));
 
 ?>
 
