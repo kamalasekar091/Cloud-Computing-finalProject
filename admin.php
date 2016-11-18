@@ -67,7 +67,7 @@ echo "<li><a href=\"/admin.php\">Admin</a></li>";
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 <h4 style="float:right" >welcome: <?php echo $_SESSION['username']; ?></h4>
 <br>
-<h1>Currently the value is <?php if($variable == 'on'){echo 'ENABLED'; }  else {echo 'DISABLED'; } ?> for all user</h1>
+<h1>Currently Upload feature is <?php if($variable == 'on'){echo 'ENABLED'; }  else {echo 'DISABLED'; } ?> for all user</h1>
 <br>
 <br>
 <form id='login' action='changestatus.php' method='post' accept-charset='UTF-8'>
