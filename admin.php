@@ -85,6 +85,10 @@ echo "<li><a href=\"/admin.php\">Admin</a></li>";
 <form action='backup.php' method='post'>
 <input type='submit' value='Restore the entire database' />
 </form>
+<?php
+$output = shell_exec('aws s3 ls s3://databasebackup-kro/');
+echo "<pre>$output</pre>";
+?>
 <script>
  $('#flag option[value=<?php echo $variable; ?>]').prop('selected', true);
 </script>
