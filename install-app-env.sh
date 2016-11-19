@@ -10,15 +10,15 @@ db_instance_url=`aws rds describe-db-instances --query 'DBInstances[*].Endpoint[
 mysql --host=$db_instance_url --user='controller' --password='controllerpass' school << EOF
 CREATE TABLE records(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,email VARCHAR(255),phone VARCHAR(255),s3_raw_url VARCHAR(255),s3_finished_url VARCHAR(255),status INT(1),receipt VARCHAR(256));
 create table credentials (ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, userName VARCHAR(255) NOT NULL, userPass VARCHAR(255) NOT NULL, status varchar(255));
-INSERT INTO credentials (userName,userPass,status) VALUES ('krose1','letmein','on');
-INSERT INTO credentials (userName,userPass,status) VALUES ('jrh','letmein','on');
-INSERT INTO credentials (userName,userPass,status) VALUES ('controller','letmein','on');
+INSERT INTO credentials (userName,userPass,status) VALUES ('krose1@hawk.iit.edu','letmein','on');
+INSERT INTO credentials (userName,userPass,status) VALUES ('jrh@iit.edu','letmein','on');
+INSERT INTO credentials (userName,userPass,status) VALUES ('controller@iit.edu','letmein','on');
+INSERT INTO records (email,phone,s3_raw_url,s3_finished_url,status,receipt) VALUES ('krose1@hawk.iit.edu','6036744303','https://s3-us-west-2.amazonaws.com/raw-kro/eartrumpet.png','https://s3-us-west-2.amazonaws.com/finish-kro/eartrumpet-bw.png',1,'Preseeded');
+INSERT INTO records (email,phone,s3_raw_url,s3_finished_url,status,receipt) VALUES ('krose1@hawk.iit.edu','6036744303','https://s3-us-west-2.amazonaws.com/raw-kro/Knuth.jpg','https://s3-us-west-2.amazonaws.com/finish-kro/Knuth-bw.jpg',1,'Preseeded');
+INSERT INTO records (email,phone,s3_raw_url,s3_finished_url,status,receipt) VALUES ('krose1@hawk.iit.edu','6036744303','https://s3-us-west-2.amazonaws.com/raw-kro/mountain.jpg','https://s3-us-west-2.amazonaws.com/finish-kro/mountain-bw.jpg',1,'Preseeded');
 commit;
 EOF
 
-#aws rds delete-db-instance --skip-final-snapshot --db-instance-identifier $db_instance_id
-#aws rds wait db-instance-deleted --db-instance-identifier $db_instance_id
-#echo "instance deleted"
 
 #Create SNS Topic 
 topic_arn_name=`aws sns create-topic --name krose-topic`
@@ -40,5 +40,22 @@ aws s3api wait bucket-exists --bucket $2
 echo "$2 created"
 
 #create queue
-aws sqs create-queue --queue-name kro-queue
+#create queue
+queueURL=`aws sqs create-queue --queue-name kro-queue`
 
+#adding permission to the Queue
+aws sqs add-permission --queue-url $queueURL --label AllPermissionToMyAccount --aws-account-ids 386593217098 --actions SendMessage
+
+aws sqs add-permission --queue-url $queueURL --label AllPermissionToMyAccount --aws-account-ids 548002151864 --actions SendMessage
+
+#pushing the images into raw bucket
+
+aws s3 cp eartrumpet.png s3://$1/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+aws s3 cp Knuth.jpg s3://$1/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+aws s3 cp mountain.jpg s3://$1/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+
+# pushing the image into finish bucket 
+
+aws s3 cp eartrumpet-bw.png s3://$2/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+aws s3 cp Knuth-bw.jpg s3://$2/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+aws s3 cp mountain-bw.jpg s3://$2/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers

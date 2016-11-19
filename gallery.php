@@ -37,7 +37,7 @@ foreach ($result['DBInstances'] as $ep)
 
 $link = mysqli_connect($url,"controller","controllerpass","school","3306") or die("Error " . mysqli_error($link));
 
-$sqlselect = "SELECT s3_raw_url FROM records";
+$sqlselect = "SELECT s3_raw_url,s3_finished_url FROM records";
 $resultforselect = $link->query($sqlselect);
 
 
@@ -132,6 +132,13 @@ if ($resultforselect->num_rows > 0) {
         echo "<a href='$value' class=\"lightbox_trigger\">";
 
         echo "<img src='$value' height=\"200\" width=\"200\"/>";
+
+        $valuefinish=$row["s3_finished_url"];
+        echo "<a href='$valuefinish' class=\"lightbox_trigger\">";
+
+        echo "<img src='$valuefinish' height=\"200\" width=\"200\"/>";
+        echo"<br>";
+        echo"<hr>";
     }
 } else {
     echo "0 results";
