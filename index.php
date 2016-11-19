@@ -64,7 +64,7 @@ $_SESSION['username']=$usernameaftersubstaring;
                             <label for='username' >UserName </label>
                         </td>
                         <td>
-                            <input type='text' name='username' id='username'  maxlength="50" />@hawk.iit.edu/@iit.edu
+                            <input type='text' name='username' id='username'  maxlength="50" />
                         </td>
                     </tr>
                     <tr>

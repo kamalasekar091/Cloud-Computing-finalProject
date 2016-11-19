@@ -109,18 +109,21 @@ aws rds delete-db-instance --skip-final-snapshot --db-instance-identifier $db_in
 aws rds wait db-instance-deleted --db-instance-identifier $db_instance_id
 echo " DB instance deleted"
 
-echo "deleting the bucket"
-aws s3api delete-object --bucket raw-kro --key switchonarex.jpg
-aws s3api delete-object --bucket raw-kro --key switchonarex.png
-aws s3api delete-bucket --bucket raw-kro --region us-west-2 
-aws s3api wait bucket-not-exists --bucket raw-kro
-aws s3api delete-bucket --bucket finish-kro --region us-west-2 
-aws s3api wait bucket-not-exists --bucket finish-kro
-aws s3api delete-bucket --bucket databasebackup-kro --region us-west-2
-aws s3api wait bucket-not-exists --bucket databasebackup-kro
 
 
-echo "buckets deleted"
+
+#echo "deleting the bucket"
+#aws s3api delete-object --bucket raw-kro --key switchonarex.jpg
+#aws s3api delete-object --bucket raw-kro --key switchonarex.png
+#aws s3api delete-bucket --bucket raw-kro --region us-west-2 
+#aws s3api wait bucket-not-exists --bucket raw-kro
+#aws s3api delete-bucket --bucket finish-kro --region us-west-2 
+#aws s3api wait bucket-not-exists --bucket finish-kro
+#aws s3api delete-bucket --bucket databasebackup-kro --region us-west-2
+#aws s3api wait bucket-not-exists --bucket databasebackup-kro
+
+
+#echo "buckets deleted"
 
 echo "deleting quee"
 
@@ -175,6 +178,15 @@ done
 
 echo "Cleared the topics"
 
+echo "working on buckets"
+
+BucketNames=`aws s3api list-buckets --query 'Buckets[].Name'`
+arrBucketname=($BucketNames)
+for Bucketname in "${arrBucketname[@]}";
+do
+        aws s3 rb s3://$Bucketname --force
+done
+echo "Deleted All Buckets"
 
 echo "AWS env cleared"
 

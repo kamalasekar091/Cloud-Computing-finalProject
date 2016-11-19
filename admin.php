@@ -83,7 +83,7 @@ echo "<li><a class=\"active\" href=\"/admin.php\">Admin</a></li>";
 <br>
 <hr>
 <form action='backup.php' method='post'>
-<input type='submit' value='Restore the entire database' />
+<input type='submit' value='Backup the entire database' />
 </form>
 <br>
 <br>
