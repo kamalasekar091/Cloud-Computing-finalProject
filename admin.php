@@ -58,10 +58,10 @@ if($variable == 'on'){
   echo"<li><a href=\"/upload.php\">Upload</a></li>";
 }
 if($_SESSION['username']=="controller"){
-echo "<li><a href=\"/admin.php\">Admin</a></li>";
+echo "<li><a class=\"active\" href=\"/admin.php\">Admin</a></li>";
 }
 ?>
-
+<li><a href="/logout.php">Log Out</a></li>
 </ul>
 
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
@@ -85,6 +85,15 @@ echo "<li><a href=\"/admin.php\">Admin</a></li>";
 <form action='backup.php' method='post'>
 <input type='submit' value='Restore the entire database' />
 </form>
+<br>
+<br>
+</form>
+<form action='restore.php' method='post'>
+<input type='submit' value='Restore the entire database' />
+</form>
+<br>
+<br>
+<hr>
 <?php
 $output = shell_exec('aws s3 ls s3://databasebackup-kro/');
 echo "<pre>$output</pre>";

@@ -52,6 +52,7 @@ sudo cp admin.php /var/www/html/
 sudo cp backup.php /var/www/html/
 sudo cp logout.php /var/www/html/
 sudo cp changestatus.php /var/www/html/
+sudo cp restore.php /var/www/html/
 
 cd ~
 
