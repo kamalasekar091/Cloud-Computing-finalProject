@@ -34,7 +34,7 @@ foreach ($result['DBInstances'] as $ep)
 
 $link = mysqli_connect($url,"controller","controllerpass","school","3306") or die("Error " . mysqli_error($link));
 
-$sqlselect = "SELECT status FROM credentials where userName='controller'";
+$sqlselect = "SELECT status FROM credentials where userName='controller@iit.edu'";
 $resultforselect = $link->query($sqlselect);
 $value='';
 

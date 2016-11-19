@@ -34,7 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT * FROM credentials WHERE userName = '$myusername' and userPass = '$mypassword'";
     $select_tbl = $link->query($sql);
     if ($select_tbl) {
-	$_SESSION['username']=$myusername;
+//	$_SESSION['username']=$myusername;
+$usernamefindposition=strpos($myusername,"@");
+$usernameaftersubstaring=substr($myusername,0,$usernamefindposition);
+$_SESSION['username']=$usernameaftersubstaring;
 	header( "Location: welcome.php" );	
 //        echo "success login" . "<br>";
     } else {

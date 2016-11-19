@@ -37,7 +37,7 @@ foreach ($result['DBInstances'] as $ep)
 
 $link = mysqli_connect($url,"controller","controllerpass","school","3306") or die("Error " . mysqli_error($link));
 
-$sqlselect = "SELECT s3_raw_url,s3_finished_url FROM records";
+$sqlselect = "SELECT s3_raw_url,s3_finished_url FROM records where status=1";
 $resultforselect = $link->query($sqlselect);
 
 

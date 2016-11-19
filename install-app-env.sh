@@ -41,12 +41,8 @@ echo "$2 created"
 
 #create queue
 #create queue
-queueURL=`aws sqs create-queue --queue-name kro-queue`
+aws sqs create-queue --queue-name kro-queue
 
-#adding permission to the Queue
-aws sqs add-permission --queue-url $queueURL --label AllPermissionToMyAccount --aws-account-ids 386593217098 --actions SendMessage
-
-aws sqs add-permission --queue-url $queueURL --label AllPermissionToMyAccount --aws-account-ids 548002151864 --actions SendMessage
 
 #pushing the images into raw bucket
 
