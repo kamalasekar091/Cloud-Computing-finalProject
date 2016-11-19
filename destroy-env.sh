@@ -116,6 +116,9 @@ aws s3api delete-bucket --bucket raw-kro --region us-west-2
 aws s3api wait bucket-not-exists --bucket raw-kro
 aws s3api delete-bucket --bucket finish-kro --region us-west-2 
 aws s3api wait bucket-not-exists --bucket finish-kro
+aws s3api delete-bucket --bucket databasebackup-kro --region us-west-2
+aws s3api wait bucket-not-exists --bucket databasebackup-kro
+
 
 echo "buckets deleted"
 

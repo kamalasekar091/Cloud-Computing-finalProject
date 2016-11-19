@@ -39,6 +39,12 @@ aws s3api wait bucket-exists --bucket $2
 
 echo "$2 created"
 
+aws s3api create-bucket --bucket databasebackup-kro --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2
+
+aws s3api wait bucket-exists --bucket databasebackup-kro
+
+echo "dtabaseBackup created"
+
 #create queue
 #create queue
 aws sqs create-queue --queue-name kro-queue

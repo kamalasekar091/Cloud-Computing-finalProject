@@ -108,11 +108,12 @@ function backup_tables($host, $user, $pass, $dbname, $tables = '*') {
     //save file
     exec('setfacl -m u:www-data:rwx /home/ubuntu');
     
-    $fileName = '/home/ubuntu/'.'db-backup-'.time().'.sql';
+    $fileName = '/home/ubuntu/'.'db-backup.sql';
     $handle = fopen($fileName,'w+');
     fwrite($handle,$return);
     if(fclose($handle)){
         echo "Done, the file name is: ".$fileName;
+	exec('aws s3 cp /home/ubuntu/db-backup.sql s3://databasebackup-kro/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers');
         header( "Location: admin.php" );
         exit; 
     }
