@@ -90,9 +90,9 @@ echo "<li><a class=\"active\" href=\"/admin.php\">Admin</a></li>";
 </form>
 <form action='restore.php' method='post'>
 <?php
-$fileindatabasebucket=`aws s3 ls s3://databasebackup-kro/';
+$fileindatabasebucket= shell_exec('aws s3 ls s3://databasebackup-kro/');
 if($fileindatabasebucket != NULL || !empty($fileindatabasebucket)){
-echo "<input type=\'submit\' value=\'Restore the entire database\' />"}
+echo "<input type='submit' value='Restore the entire database' />"; }
 else{
 echo "the Database bucket is empty";
 }
