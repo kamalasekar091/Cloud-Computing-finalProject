@@ -67,10 +67,10 @@ if (!($stmt2 = $conn->prepare("INSERT INTO records (id,email,phone,s3_raw_url,s3
 $stmt = $conn->prepare("INSERT INTO records (email,phone,s3_raw_url,s3_finished_url,status,receipt) VALUES (?, ?, ?, ?, ?, ?)");
 $statusnumber=0;
 $stmt->bind_param("ssssss", $email, $phone, $s3_raw_url,$s3_finished_url,$status,$receipt);
-$email="kamalasekar091@gmail.com";
+$email=$_SESSION['emailid'];
 $phone="6036744303";
 $s3_raw_url=$imageurl;
-$s3_finished_url="summa";
+$s3_finished_url="YET_TO_UPLOAD";
 $status=$statusnumber;
 $receipt=md5($imageurl);
 $stmt->execute();

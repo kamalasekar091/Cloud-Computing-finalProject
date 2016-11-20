@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT * FROM credentials WHERE userName = '$myusername' and userPass = '$mypassword'";
     $select_tbl = $link->query($sql);
     if ($select_tbl) {
+$_SESSION['emailid']=$myusername;
 //	$_SESSION['username']=$myusername;
 $usernamefindposition=strpos($myusername,"@");
 $usernameaftersubstaring=substr($myusername,0,$usernamefindposition);
