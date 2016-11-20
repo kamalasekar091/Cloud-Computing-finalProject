@@ -79,13 +79,13 @@ $conn->close();
 
 $_SESSION['receipt']=$receipt;
   
-$queueUrl = $sqsclient->getQueueUrl(array(
+$queueUrl = $sqsclient->listQueues(array(
     // QueueName is required just using the prefix to find out the queue URL
-    'QueueName' => 'kro',
+'QueueNamePrefix' => 'kro',
 ));
 
 $sqsclient->sendMessage(array(
-    'QueueUrl'    => $queueUrl['QueueUrl'],
+    'QueueUrl'    => $queueUrl['QueueUrls'][0],
     'MessageBody' => $_SESSION['receipt'],
 ));
 
