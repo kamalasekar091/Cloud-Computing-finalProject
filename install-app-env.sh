@@ -1,5 +1,12 @@
 #!/bin/bash
 
+checkifmysqlisinstalled=`dpkg --get-selections | grep mysql`
+
+if [ -z "$checkifmysqlisinstalled" ]; then
+   sudo apt-get  install -y mysql-client-core-5.7
+fi
+
+
 aws rds create-db-instance --db-instance-identifier itmo544-krose1-mysqldb --allocated-storage 5 --db-instance-class db.t2.micro --engine mysql --master-username controller --master-user-password controllerpass  --availability-zone us-west-2b --db-name school
 db_instance_id=`aws rds describe-db-instances --query 'DBInstances[*].DBInstanceIdentifier'`
 echo $db_instance_id
@@ -49,6 +56,37 @@ echo "dtabaseBackup created"
 #create queue
 aws sqs create-queue --queue-name kro-queue
 
+presentworkingdirectory=`pwd`
+
+if [ ! -f $presentworkingdirectory/eartrumpet-bw.png ]; 
+then
+    wget https://dl.dropboxusercontent.com/u/68320238/cloud/eartrumpet-bw.png
+fi
+
+if [ ! -f $presentworkingdirectory/eartrumpet.png ]; 
+then
+    wget https://dl.dropboxusercontent.com/u/68320238/cloud/eartrumpet.png
+fi
+
+if [ ! -f $presentworkingdirectory/Knuth-bw.jpg ]; 
+then
+    wget https://dl.dropboxusercontent.com/u/68320238/cloud/Knuth-bw.jpg
+fi
+
+if [ ! -f $presentworkingdirectory/Knuth.jpg ]; 
+then
+    wget https://dl.dropboxusercontent.com/u/68320238/cloud/Knuth.jpg
+fi
+
+if [ ! -f $presentworkingdirectory/mountain-bw.jpg ]; 
+then
+    wget https://dl.dropboxusercontent.com/u/68320238/cloud/mountain-bw.jpg
+fi
+
+if [ ! -f $presentworkingdirectory/mountain.jpg ]; 
+then
+    wget https://dl.dropboxusercontent.com/u/68320238/cloud/mountain.jpg
+fi
 
 #pushing the images into raw bucket
 
