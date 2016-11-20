@@ -80,8 +80,8 @@ $conn->close();
 $_SESSION['receipt']=$receipt;
   
 $queueUrl = $sqsclient->getQueueUrl(array(
-    // QueueName is required
-    'QueueName' => 'kro-queue',
+    // QueueName is required just using the prefix to find out the queue URL
+    'QueueName' => 'kro',
 ));
 
 $sqsclient->sendMessage(array(
