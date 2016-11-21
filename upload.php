@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'checkuploadenabled.php';
 
 $variable=returnenabledstatus();

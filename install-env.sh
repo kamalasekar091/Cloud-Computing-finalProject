@@ -193,6 +193,9 @@ aws ec2 wait instance-running --instance-ids $instance_id
 #launch a load balancer  with HTTP listner
 aws elb create-load-balancer --load-balancer-name $8 --listeners Protocol=Http,LoadBalancerPort=80,InstanceProtocol=Http,InstancePort=80 --availability-zones us-west-2b --security-groups $3
 
+aws elb create-lb-cookie-stickiness-policy --load-balancer-name $8 --policy-name sticky-policy01 --cookie-expiration-period 3600
+
+aws elb set-load-balancer-policies-of-listener --load-balancer-name $8 --load-balancer-port 80 --policy-names sticky-policy01
 
 #register the running instances with the load balancer
 aws elb register-instances-with-load-balancer --load-balancer-name $8 --instances $instance_id
@@ -201,7 +204,7 @@ aws elb register-instances-with-load-balancer --load-balancer-name $8 --instance
 aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1  --key-name $2 --instance-type t2.micro --user-data file://installapp.sh --security-groups $3 --iam-instance-profile $9
 
 #create a auto scaling group with minumum capacity as 0 and desired capacity as 1
-aws autoscaling create-auto-scaling-group --auto-scaling-group-name $7 --launch-configuration-name $4 --availability-zones us-west-2b --min-size 0 --max-size 5 --desired-capacity 0
+aws autoscaling create-auto-scaling-group --auto-scaling-group-name $7 --launch-configuration-name $4 --availability-zones us-west-2b --min-size 0 --max-size 5 --desired-capacity 2
 
 #attach the running instances with the auto scaling group to over come the existing extra autoscaling problem now the desired capacity is increased to 4
 aws autoscaling attach-instances --instance-ids $instance_id --auto-scaling-group-name $7
