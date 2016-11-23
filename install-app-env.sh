@@ -105,9 +105,15 @@ fi
 aws s3 cp eartrumpet.png s3://$1/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 aws s3 cp Knuth.jpg s3://$1/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 aws s3 cp mountain.jpg s3://$1/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+aws s3 cp IIT-logo.png s3://$1/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 
 # pushing the image into finish bucket 
 
 aws s3 cp eartrumpet-bw.png s3://$2/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 aws s3 cp Knuth-bw.jpg s3://$2/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 aws s3 cp mountain-bw.jpg s3://$2/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+
+
+#Create a instance to process the image pushed in raw-kro
+
+aws ec2 run-instances --image-id ami-09b31569 --key-name inclassnew --security-group-ids sg-6a60ad13 --instance-type t2.micro --placement AvailabilityZone=us-west-2b --iam-instance-profile Name="developer" --user-data file://installapptoprocessimage.sh
