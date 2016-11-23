@@ -103,11 +103,20 @@ echo "clearing the infrastructure"
 
 db_instance_id=`aws rds describe-db-instances --query 'DBInstances[*].DBInstanceIdentifier'`
 
-echo $db_instance_id
+#echo $db_instance_id
 
-aws rds delete-db-instance --skip-final-snapshot --db-instance-identifier $db_instance_id
-aws rds wait db-instance-deleted --db-instance-identifier $db_instance_id
-echo " DB instance deleted"
+#aws rds delete-db-instance --skip-final-snapshot --db-instance-identifier $db_instance_id
+#aws rds wait db-instance-deleted --db-instance-identifier $db_instance_id
+#echo " DB instance deleted"
+
+arrdb=($db_instance_id)
+for dbname in "${arrdb[@]}";
+do
+echo $dbname
+aws rds delete-db-instance --skip-final-snapshot --db-instance-identifier $dbname
+aws rds wait db-instance-deleted --db-instance-identifier $dbname
+echo "DB instance deleted"
+done
 
 
 

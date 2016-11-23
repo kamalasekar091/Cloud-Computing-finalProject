@@ -81,7 +81,7 @@ sudo cp -ar  ~/vendor /var/www/html
 
 sudo cp -ar /root/vendor /var/www/html
 
-sudo cp -ar /var/www/html /home/ubuntu/
+sudo cp -ar /var/www/html/* /home/ubuntu/
 
 sudo setfacl -m u:www-data:rwx /home/ubuntu
 
@@ -89,9 +89,11 @@ echo 'www-data  ALL=(ALL:ALL) ALL' >> /etc/sudoers
 
 echo 'apache  ALL=(ALL:ALL) ALL' >> /etc/sudoers
 
-crontab -l > mycron
+#crontab -l > mycron
 #echo new cron into cron file
-echo "*/10 * * * * php /home/ubuntu/edit.php" >> mycron
+#echo "*/10 * * * * php /home/ubuntu/edit.php" >> mycron
 #install new cron file
-crontab mycron
-rm mycron
+#crontab mycron
+#rm mycron
+
+crontab -e | { cat; echo "*/10 * * * * php /home/ubuntu/edit.php"; } | crontab -

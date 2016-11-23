@@ -95,6 +95,11 @@ then
     wget https://dl.dropboxusercontent.com/u/68320238/cloud/mountain.jpg
 fi
 
+if [ ! -f $presentworkingdirectory/IIT-logo.png ];
+then
+    wget https://dl.dropboxusercontent.com/u/68320238/cloud/IIT-logo.png
+fi
+
 #pushing the images into raw bucket
 
 aws s3 cp eartrumpet.png s3://$1/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
