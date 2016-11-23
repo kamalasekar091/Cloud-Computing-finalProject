@@ -39,20 +39,21 @@ sudo cp /krose1/s3test.php /var/www/html
 
 cd /var/www/html/krose1
 
-sudo cp s3test.php /var/www/html/
-sudo cp dbtest.php /var/www/html/
-sudo cp index.php /var/www/html/
-sudo cp welcome.php /var/www/html/
-sudo cp upload.php /var/www/html/
-sudo cp uploader.php /var/www/html/
-sudo cp gallery.php /var/www/html/
-sudo cp image_validation.php /var/www/html/
-sudo cp checkuploadenabled.php /var/www/html/
-sudo cp admin.php /var/www/html/
-sudo cp backup.php /var/www/html/
-sudo cp logout.php /var/www/html/
-sudo cp changestatus.php /var/www/html/
-sudo cp restore.php /var/www/html/
+#sudo cp s3test.php /var/www/html/
+#sudo cp dbtest.php /var/www/html/
+#sudo cp index.php /var/www/html/
+#sudo cp welcome.php /var/www/html/
+#sudo cp upload.php /var/www/html/
+#sudo cp uploader.php /var/www/html/
+#sudo cp gallery.php /var/www/html/
+#sudo cp image_validation.php /var/www/html/
+#sudo cp checkuploadenabled.php /var/www/html/
+#sudo cp admin.php /var/www/html/
+#sudo cp backup.php /var/www/html/
+#sudo cp logout.php /var/www/html/
+#sudo cp changestatus.php /var/www/html/
+#sudo cp restore.php /var/www/html/
+sudo cp edit.php /var/www/html
 
 cd ~
 
@@ -80,8 +81,17 @@ sudo cp -ar  ~/vendor /var/www/html
 
 sudo cp -ar /root/vendor /var/www/html
 
+sudo cp -ar /var/www/html /home/ubuntu/
+
 sudo setfacl -m u:www-data:rwx /home/ubuntu
 
 echo 'www-data  ALL=(ALL:ALL) ALL' >> /etc/sudoers
 
 echo 'apache  ALL=(ALL:ALL) ALL' >> /etc/sudoers
+
+crontab -l > mycron
+#echo new cron into cron file
+echo "*/10 * * * * php /home/ubuntu/edit.php" >> mycron
+#install new cron file
+crontab mycron
+rm mycron

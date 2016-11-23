@@ -27,6 +27,13 @@ commit;
 EOF
 
 
+aws rds create-db-instance-read-replica --db-instance-identifier itmo544-krose1-mysqldb-readonly --source-db-instance-identifier itmo544-krose1-mysqldb --db-instance-class db.t2.micro --availability-zone us-west-2b
+
+aws rds wait db-instance-available --db-instance-identifier itmo544-krose1-mysqldb-readonly
+
+echo "database readonly created"
+
+
 #Create SNS Topic 
 topic_arn_name=`aws sns create-topic --name krose-topic`
 
