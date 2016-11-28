@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #To update the repository
-#sudo apt-get update -y
+sudo apt-get update -y
 
 #install python-pip
 sudo apt-get install -y python-setuptools python-pip
@@ -96,4 +96,9 @@ echo 'apache  ALL=(ALL:ALL) ALL' >> /etc/sudoers
 #crontab mycron
 #rm mycron
 
+echo "trying to add to cron job"
+crontab -l | { cat; echo "*/10 * * * * php /home/ubuntu/edit.php"; } | crontab -
+
+echo "try 02"
 crontab -e | { cat; echo "*/10 * * * * php /home/ubuntu/edit.php"; } | crontab -
+
