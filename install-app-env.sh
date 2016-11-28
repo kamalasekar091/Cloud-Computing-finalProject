@@ -39,6 +39,7 @@ topic_arn_name=`aws sns create-topic --name krose-topic`
 
 #create Subscribe topic
 #aws sns subscribe --topic-arn $topic_arn_name --protocol email --notification-endpoint kamalasekar091@gmail.com
+aws sns subscribe --topic-arn $topic_arn_name --protocol sms --notification-endpoint +16036744303
 
 # create an S3 bucket
 aws s3api create-bucket --bucket $1 --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2
@@ -116,4 +117,4 @@ aws s3 cp mountain-bw.jpg s3://$2/ --grants read=uri=http://acs.amazonaws.com/gr
 
 #Create a instance to process the image pushed in raw-kro
 
-aws ec2 run-instances --image-id ami-09b31569 --key-name inclassnew --security-group-ids sg-6a60ad13 --instance-type t2.micro --placement AvailabilityZone=us-west-2b --iam-instance-profile Name="developer" --user-data file://installapptoprocessimage.sh
+#aws ec2 run-instances --image-id ami-09b31569 --key-name inclassnew --security-group-ids sg-6a60ad13 --instance-type t2.micro --placement AvailabilityZone=us-west-2b --iam-instance-profile Name="developer" --user-data file://installapptoprocessimage.sh

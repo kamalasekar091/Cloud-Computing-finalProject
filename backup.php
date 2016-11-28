@@ -9,7 +9,7 @@ $client = RdsClient::factory(array(
 ));
 
 $result = $client->describeDBInstances(array(
-    'DBInstanceIdentifier' => 'itmo544-krose1-mysqldb',
+    'DBInstanceIdentifier' => 'itmo544-krose1-mysqldb-readonly',
 ));
 
 $endpoint = "";

@@ -10,7 +10,7 @@ $client = RdsClient::factory(array(
             'region' => 'us-west-2'
         ));
 $result = $client->describeDBInstances(array(
-    'DBInstanceIdentifier' => 'itmo544-krose1-mysqldb',
+    'DBInstanceIdentifier' => 'itmo544-krose1-mysqldb-readonly',
         ));
 $endpoint = "";
 $url = "";

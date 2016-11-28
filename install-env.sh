@@ -212,6 +212,9 @@ aws autoscaling attach-instances --instance-ids $instance_id --auto-scaling-grou
 #attach the load balancer to the autoscaling group
 aws autoscaling attach-load-balancers --load-balancer-names $8 --auto-scaling-group-name $7
 
+#crete a instance to process the image from raw bucket to finish bucket
+aws ec2 run-instances --image-id $1 --key-name $2 --security-group-ids $3 --instance-type t2.micro --user-data file://installapptoprocessimage.sh --placement AvailabilityZone=us-west-2b --iam-instance-profile Name="$9"
+
 echo "creation succesful"
 
 else
