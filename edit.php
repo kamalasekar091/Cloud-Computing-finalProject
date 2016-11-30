@@ -88,7 +88,16 @@ $conn->close();
 
 // load the "stamp" and photo to apply the water mark to
 $stamp = imagecreatefrompng('https://s3-us-west-2.amazonaws.com/raw-kro/IIT-logo.png');
-$im = imagecreatefromjpeg($rawurl);  // replace this path with $rawurl
+$im = '';  // replace this path with $rawurl
+
+$checkimgformat=substr($rawurl, -3);
+
+if($checkimgformat == 'png'){
+
+$im=imagecreatefrompng($rawurl);}
+else{
+$im = imagecreatefromjpeg($rawurl);
+}
 
 $lstoccuranceofslash=strripos($rawurl,"/") + 1;
 

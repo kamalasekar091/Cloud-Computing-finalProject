@@ -131,7 +131,7 @@ if ($resultforselect->num_rows > 0) {
 		$value=$row["s3_raw_url"];
         echo "<a href='$value' class=\"lightbox_trigger\">";
 
-        echo "<img src='$value' height=\"200\" width=\"200\"/>";
+        echo "<img src='$value' height=\"200\" width=\"200\" style=\"margin:0px 20px\" />";
 
         $valuefinish=$row["s3_finished_url"];
         echo "<a href='$valuefinish' class=\"lightbox_trigger\">";
