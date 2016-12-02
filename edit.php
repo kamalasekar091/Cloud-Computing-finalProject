@@ -3,7 +3,7 @@
 
 require 'vendor/autoload.php';
 use Aws\Sqs\SqsClient;
-
+use Aws\Sns\SnsClient;
 use Aws\Rds\RdsClient;
 // make sure you have php-gd installed and you may need to reload the webserver (apache2)
 //This should be done in install app
@@ -20,6 +20,11 @@ $rdsclient = RdsClient::factory(array(
 ));
 
 $s3 = new Aws\S3\S3Client([
+    'version' => 'latest',
+    'region'  => 'us-west-2'
+]);
+
+$snsclient = new Aws\Sns\SnsClient([
     'version' => 'latest',
     'region'  => 'us-west-2'
 ]);
@@ -52,6 +57,11 @@ $sqsresult = $sqsclient->receiveMessage(array(
 $messagebodyfromsqs=$sqsresult['Messages'][0]['Body'];
 
 $receipttodelete=$sqsresult['Messages'][0]['ReceiptHandle'];
+
+$arnsns = $snsclient->createTopic(array(
+    // Name is required
+    'Name' => 'krose-topic',
+));
 
 if (!empty($messagebodyfromsqs)){
 echo "Inside If loop" . "\n";
@@ -92,7 +102,7 @@ $im = '';  // replace this path with $rawurl
 
 $checkimgformat=substr($rawurl, -3);
 
-if($checkimgformat == 'png'){
+if($checkimgformat == 'png' || $checkimgformat == 'PNG'){
 
 $im=imagecreatefrompng($rawurl);}
 else{
@@ -158,6 +168,16 @@ $sqlselect = "UPDATE records SET s3_finished_url='$finishedimageurl',status=1 WH
 $resultforselect = $connupdate->query($sqlselect);
 $connupdate->close();
 
+$sendmessage = $snsclient->publish(array(
+    'TopicArn' => $arnsns['TopicArn'],
+
+    // Message is required
+    'Message' => 'Image Processed Please check your gallery Page',
+    'Subject' => 'Check -01',
+
+));
+
+
 $resultfordelete = $sqsclient->deleteMessage(array(
     // QueueUrl is required
     'QueueUrl' => $queueUrl['QueueUrls'][0],
@@ -165,14 +185,27 @@ $resultfordelete = $sqsclient->deleteMessage(array(
     'ReceiptHandle' => $receipttodelete,
 ));
 
+
+
 if($resultfordelete)
 {
 echo "Message Deleted" ."\n";
+
 }
 
 }
 else
 {
+$sendmessage = $snsclient->publish(array(
+    'TopicArn' => $arnsns['TopicArn'],
+
+    // Message is required
+    'Message' => 'Quee is empty or busy',
+    'Subject' => 'Check -01',
+
+));
+
+
 echo "the Quee is busy or empty" . "\n";
 }
 ?>
