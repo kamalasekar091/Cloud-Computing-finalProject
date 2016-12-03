@@ -79,7 +79,7 @@ Parameter to be passed in the same order:
 
 Command:
 
-./install-env.sh ami-df05acbf <Key-Name> <Security-Group> <Launch-Configuration> <Count> <Client-Token> <auto_scaling_Group_Name> <Load_Balancer_Name> developer
+./install-env.sh ami-df05acbf [Key-Name] [Security-Group] [Launch-Configuration] [Count] [Client-Token] [auto_scaling_Group_Name] [load_Balancer_Name] developer
 
 Assumption:
 
