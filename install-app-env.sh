@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt-get update -y
+
 checkifmysqlisinstalled=`dpkg --get-selections | grep mysql`
 
 if [ -z "$checkifmysqlisinstalled" ]; then
@@ -40,6 +42,8 @@ topic_arn_name=`aws sns create-topic --name krose-topic`
 #create Subscribe topic
 #aws sns subscribe --topic-arn $topic_arn_name --protocol email --notification-endpoint kamalasekar091@gmail.com
 aws sns subscribe --topic-arn $topic_arn_name --protocol sms --notification-endpoint +16036744303
+
+aws sns subscribe --topic-arn $topic_arn_name --protocol sms --notification-endpoint $3
 
 # create an S3 bucket
 aws s3api create-bucket --bucket $1 --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2

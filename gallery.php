@@ -170,7 +170,7 @@ jQuery(document).ready(function($) {
         if ($('#lightbox').length > 0) { // #lightbox exists
             
             //place href as img src value
-            $('#content').html('<img src="' + image_href + '" />');
+            $('#content').html('<img src="' + image_href + '" height=\"400\" width=\"400\" />');
             
             //show lightbox window - you could use .show('fast') for a transition
             $('#lightbox').show();
@@ -183,7 +183,7 @@ jQuery(document).ready(function($) {
             '<div id="lightbox">' +
                 '<p>Click to close</p>' +
                 '<div id="content">' + //insert clicked link's href into img src
-                    '<img src="' + image_href +'" />' +
+                    '<img src="' + image_href +'" height=\"400\" width=\"400\" />' +
                 '</div>' +  
             '</div>';
                 

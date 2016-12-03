@@ -8,6 +8,7 @@ $variable=returnenabledstatus();
 
 <html>
 <head>
+<title>Welcome</title>
 <style>
 body {
     margin: 0;
