@@ -41,9 +41,9 @@ install-app-env.sh
 
 Parameter to be passed in the same order:
 
-1-	Raw Bucket 
-2-      Finish bucket
-3-	Phone number - +16036744303 (the phone number should start with +1)
+1.	Raw Bucket 
+2.      Finish bucket
+3.	Phone number - +16036744303 (the phone number should start with +1)
 
 Command:
 
@@ -67,15 +67,15 @@ install-env.sh
 
 Parameter to be passed in the same order:
 
-1-	AMI ID--- please use ami-df05acbf
-2-	key-name
-3-	security-group
-4-	launch-configuration
-5-	count of the instance
-6-	client token
-7-	auto scaling group name
-8-	load balancer name
-9-	IAM profile name
+1.	AMI ID--- please use ami-df05acbf
+2.	key-name
+3.	security-group
+4.	launch-configuration
+5.	count of the instance
+6.	client token
+7.	auto scaling group name
+8.	load balancer name
+9.	IAM profile name
 
 Command:
 
