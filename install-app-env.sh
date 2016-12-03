@@ -1,10 +1,10 @@
 #!/bin/bash
 
-sudo apt-get update -y
 
 checkifmysqlisinstalled=`dpkg --get-selections | grep mysql`
 
 if [ -z "$checkifmysqlisinstalled" ]; then
+   sudo apt-get update -y
    sudo apt-get  install -y mysql-client-core-5.7
 fi
 
