@@ -1,7 +1,8 @@
 
 Final Submission
 
-HEADS-UP
+HEADS-UP:
+--------
 
 1. The Preseeded images are displayed only for the controller user (Database entry is made in such a way, only controller user has access to view the preseeded)
 
@@ -16,7 +17,7 @@ HEADS-UP
 6. There are few PHP files created, which were not instructed in the assignment. These files help in the main PHP file in functioning. Kindly download the entire GIT repository while evaluating the code.
 
 Credentials for users:
-----------------------
+
 Controller:
 Username: controller@iit.edu
 Password: letmein
@@ -30,24 +31,25 @@ Password: letmein
 
 
 STEP 01- SETUP THE INFRASTRUCTURE
+---------------------------------
 
 
 
-Script to be executed
----------------------
+Script to be executed:
+
 install-app-env.sh
 
-Parameter to be passed in the same order
-----------------------------------------
+Parameter to be passed in the same order:
+
 1-	Raw Bucket name kro
 3-	Phone number - +16036744303 (the phone number should start with +1)
 
-Command
---------
+Command:
+
 ./install-app-env.sh raw-kro finish-kro <<phone number>>
 
-Assumption
-----------
+Assumption:
+
 The PHP scripts and other shell script are written with assumption that the bucket name will be raw-kro and finish-kro, kindly provide the same input.
 
 The Db takes in Default security group it is assumed that default security group had 3306 port enabled
@@ -55,16 +57,15 @@ The Db takes in Default security group it is assumed that default security group
 
 
 STEP 02- SETUP ENVIRONMENT
+--------------------------
 
 
+Script to be executed:
 
-
-Script to be executed 	
----------------------
 install-env.sh
 
-Parameter to be passed in the same order
----------------------------------------
+Parameter to be passed in the same order:
+
 1-	AMI ID--- please use ami-df05acbf
 2-	key-name
 3-	security-group
@@ -75,8 +76,8 @@ Parameter to be passed in the same order
 8-	load balancer name
 9-	IAM profile name
 
-Command
--------
+Command:
+
 ./install-env.sh ami-df05acbf <<Key-Name>> <<Security-Group>> <<Launch-Configuration>> <<Count>> <<Client-Token>> <<auto_scaling_Group_Name>> <<Load_Balancer_Name>> developer
 
 Assumption
@@ -87,18 +88,19 @@ The security group has HTTP and SSH enabled
 
 
 DESTROY ENVIRONMENT
+-------------------
 
 
-Script to be executed
----------------------
+Script to be executed:
+
 Destroy-env.sh
 
-Parameter
---------
+Parameter:
+
 No parameter
 
-command
--------
+command:
+
 ./destroy-env.sh
 
 ====================================================================================================================================================================================================
