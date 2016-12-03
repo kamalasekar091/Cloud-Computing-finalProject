@@ -41,12 +41,13 @@ install-app-env.sh
 
 Parameter to be passed in the same order:
 
-1-	Raw Bucket name kro
+1-	Raw Bucket 
+2-      Finish bucket
 3-	Phone number - +16036744303 (the phone number should start with +1)
 
 Command:
 
-./install-app-env.sh raw-kro finish-kro <phone number>
+./install-app-env.sh raw-kro finish-kro [phone number]
 
 Assumption:
 
