@@ -9,8 +9,12 @@ UserName: controller@iit.edu
 Password: letmein
 
 LoginID Details for Professor:
-userNAme: jrh@iit.edu
+userNAme: jrh@iit.edu ( If this is not working try hajek@iit.edu)
 Password: letmein
+
+Student Login:
+UserName: krose1@hawk.iit.edu
+Password:letmein
 
 A drop down is used in admin.php to change status of the upload feature. on/off should be clicked and then submit button should be clicked.
 
