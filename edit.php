@@ -200,7 +200,7 @@ $sendmessage = $snsclient->publish(array(
     'TopicArn' => $arnsns['TopicArn'],
 
     // Message is required
-    'Message' => 'Quee is empty or busy',
+    'Message' => 'Quee is empty',
     'Subject' => 'Check -01',
 
 ));
