@@ -46,7 +46,7 @@ Parameter to be passed in the same order:
 
 Command:
 
-./install-app-env.sh raw-kro finish-kro <<phone number>>
+./install-app-env.sh raw-kro finish-kro <phone number>
 
 Assumption:
 
@@ -78,10 +78,10 @@ Parameter to be passed in the same order:
 
 Command:
 
-./install-env.sh ami-df05acbf <<Key-Name>> <<Security-Group>> <<Launch-Configuration>> <<Count>> <<Client-Token>> <<auto_scaling_Group_Name>> <<Load_Balancer_Name>> developer
+./install-env.sh ami-df05acbf <Key-Name> <Security-Group> <Launch-Configuration> <Count> <Client-Token> <auto_scaling_Group_Name> <Load_Balancer_Name> developer
 
-Assumption
-----------
+Assumption:
+
 The AWS cli command Is installed in your environment, the developer IAM profile has ec2, RDS, SQS, IAM, S3, SNS full access. 
 The IAM role is named as developer. 
 The security group has HTTP and SSH enabled
