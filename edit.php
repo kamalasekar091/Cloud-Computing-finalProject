@@ -41,8 +41,8 @@ $rdsresult = $rdsclient->describeDBInstances(array(
 $sqsresult = $sqsclient->receiveMessage(array(
     // QueueUrl is required
     'QueueUrl' => $queueUrl['QueueUrls'][0],
-//    'VisibilityTimeout' => 300,//Hiding the message for 300 seconds
-  //  'MaxNumberOfMessages' => 1,
+    'VisibilityTimeout' => 300,//Hiding the message for 300 seconds
+  'MaxNumberOfMessages' => 1,
 
 ));
 
